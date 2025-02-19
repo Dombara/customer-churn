@@ -1,3 +1,4 @@
+import os
 from flask import Flask,jsonify,request
 import numpy as np
 import tensorflow as tf
@@ -38,6 +39,18 @@ model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
 # model.evaluate(x_test, y_test)
 
 
+
+
+@app.route('/')
+def home():
+    return "Customer Churn Prediction API is running!"
+
+
+
+
+
+
+
 scalar=joblib.load('scaler.pkl')
 onehot_encoder=joblib.load('onehot_encoder.pkl')
 label_encoder=joblib.load('label_encoder.pkl')
@@ -61,7 +74,8 @@ def predict():
         return jsonify({"error":str(e)})
 
         if __name__ == '__main__':
-            app.run(host='0.0.0.0', debug=True)
+            port = int(os.environ.get('PORT', 5000))  # Use Render-assigned port
+            app.run(host='0.0.0.0', debug=True,port=port)
 
 
 
