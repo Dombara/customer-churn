@@ -5,4 +5,4 @@ pandas
 joblib
 flask_cors
 gunicorn
-sklearn
+scikit-learn
