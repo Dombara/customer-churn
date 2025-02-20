@@ -4,14 +4,14 @@ import numpy as np
 import tensorflow as tf
 import pandas as pd
 import joblib
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 # from datetime import datetime  
 app = Flask(__name__)
 # CORS(app)
 CORS(app, resources={
     r"/*": {
         "origins": "*",
-        "methods": ["POST", "OPTIONS"],
+        "methods": ["POST", "OPTIONS", "GET"],
         "allow_headers": ["Content-Type", "Authorization", "Accept"]
     }
 })
@@ -71,10 +71,11 @@ label_encoder=joblib.load('label_encoder.pkl')
 #     os.makedirs(UPLOAD_FOLDER)
 
 @app.route('/upload', methods=['POST'])
+# @cross_origin()
 def upload_file():
     # print(request.files)
     f=pd.read_csv(request.files['file'])
-    return jsonify({"data":"fetched"})
+    return jsonify({"data":"fetched", "status":200})
     # print(f)
 
     # try:
@@ -116,6 +117,7 @@ def upload_file():
     #     return jsonify({'error': str(e)}), 500
 
 @app.route('/predict',methods=['POST'])
+# @cross_origin()
 def predict():
     try:
          
@@ -142,6 +144,8 @@ def predict():
 
 
 
+
+# response.headers.add('Access-Control-Allow-Origin', '*')    
 
 
 
