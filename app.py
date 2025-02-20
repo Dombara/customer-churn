@@ -41,7 +41,7 @@ model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
 
 
 
-@app.route('/',methods=['POST'])
+@app.route('/',methods=['GET'])
 def home():
     return jsonify({"message":"Hello World","status":200})
 
