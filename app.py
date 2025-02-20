@@ -130,9 +130,13 @@ def upload_file():
 @app.route('/predict',methods=['POST'])
 # @cross_origin()
 def predict():
+    predict_results=[]
     try:
+        data=pd.read_csv(request.files['file'])
+        data=np.array(data)
+
          
-        data=request.get_json()
+        
 
         features=[ data["CreditScore"], data["Geography"], data["Gender"], data["Age"], data["Tenure"], data["Balance"], data["NumOfProducts"], data["HasCrCard"], data["IsActiveMember"],data["EstimatedSalary"]]
 
@@ -140,9 +144,12 @@ def predict():
         features[:,2]=label_encoder.transform(features[:,2])
         features=onehot_encoder.transform(features).toarray()
         features=scalar.transform(features)
-        prediction=model.predict(features)[0][0]
 
-        return jsonify({"churn probability":float(prediction),"churn":bool(prediction>0.5)})
+        for i in range(10):
+            prediction=model.predict(features)[0][0]
+            predict_results.append(prediction)
+
+        return jsonify({"predictions":predict_results}) 
 
     except Exception as e:
         return jsonify({"error":str(e)})
