@@ -76,8 +76,8 @@ def upload_file():
     # print(request.files)
     f=pd.read_csv(request.files['file'])
     f=np.array(f)
-    print(f)
-    
+    print(f[0][0])
+
     # print("Message")
     # print(f)
 
