@@ -74,7 +74,8 @@ label_encoder=joblib.load('label_encoder.pkl')
 def upload_file():
     # print(request.files)
     f=pd.read_csv(request.files['file'])
-    print(f)
+    return jsonify({"data":"fetched"})
+    # print(f)
 
     # try:
     #     if 'file' not in request.files:
