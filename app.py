@@ -133,7 +133,7 @@ def predict():
     predict_results=[]
     try:
         data=pd.read_csv(request.files['file'])
-        data=np.array(data)
+        # data=np.array(data)
 
          
         
@@ -145,9 +145,7 @@ def predict():
         features=onehot_encoder.transform(features).toarray()
         features=scalar.transform(features)
 
-        for i in range(10):
-            prediction=model.predict(features)[0][0]
-            predict_results.append(prediction)
+      
 
         return jsonify({"predictions":predict_results}) 
 
