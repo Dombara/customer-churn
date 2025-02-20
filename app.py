@@ -56,9 +56,56 @@ scalar=joblib.load('scaler.pkl')
 onehot_encoder=joblib.load('onehot_encoder.pkl')
 label_encoder=joblib.load('label_encoder.pkl')
 
+
+# Create uploads directory if it doesn't exist
+UPLOAD_FOLDER = 'uploads'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+@app.route('/predict', methods=['POST'])
+def upload_file():
+    try:
+        if 'file' not in request.files:
+            print('No file part in request')
+            return jsonify({'error': 'No file part'}), 400
+
+        file = request.files['file']
+        
+        if file.filename == '':
+            print('No selected file')
+            return jsonify({'error': 'No selected file'}), 400
+
+        if not file.filename.endswith('.csv'):
+            print(f'Invalid file type: {file.filename}')
+            return jsonify({'error': 'Only CSV files are allowed'}), 400
+
+        # Generate unique filename with timestamp
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        secure_filename = f"{timestamp}_{file.filename}"
+        filepath = os.path.join(UPLOAD_FOLDER, secure_filename)
+
+        # Save the file
+        file.save(filepath)
+
+        # Log the upload
+        file_size = os.path.getsize(filepath)
+        print(f'File uploaded: {secure_filename}, Size: {file_size} bytes')
+
+        return jsonify({
+            'message': 'File uploaded successfully',
+            'filename': secure_filename,
+            'size': file_size,
+            'timestamp': timestamp
+        }), 200
+
+    except Exception as e:
+        print(f'Error processing file: {str(e)}')
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/predict',methods=['POST'])
 def predict():
     try:
+         
         data=request.get_json()
 
         features=[ data["CreditScore"], data["Geography"], data["Gender"], data["Age"], data["Tenure"], data["Balance"], data["NumOfProducts"], data["HasCrCard"], data["IsActiveMember"],data["EstimatedSalary"]]
