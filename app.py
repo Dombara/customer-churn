@@ -5,7 +5,7 @@ import tensorflow as tf
 import pandas as pd
 import joblib
 from flask_cors import CORS
-from datetime import datetime
+import datetime
 
 app = Flask(__name__)
 CORS(app)
