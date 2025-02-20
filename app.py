@@ -92,7 +92,7 @@ def upload_file():
         # Log the upload
         file_size = os.path.getsize(filepath)
         print(f'File uploaded: {secure_filename}, Size: {file_size} bytes')
-        print(file)
+        
         return jsonify({
             'message': 'File uploaded successfully',
             'filename': secure_filename,
