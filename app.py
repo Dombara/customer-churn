@@ -5,6 +5,7 @@ import tensorflow as tf
 import pandas as pd
 import joblib
 from flask_cors import CORS
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -62,7 +63,7 @@ UPLOAD_FOLDER = 'uploads'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
-@app.route('/predict', methods=['POST'])
+@app.route('/upload', methods=['POST'])
 def upload_file():
     try:
         if 'file' not in request.files:
