@@ -65,10 +65,10 @@ label_encoder=joblib.load('label_encoder.pkl')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-    print(request.files)
+    # print(request.files)
     f=pd.read_csv(request.files['file'])
     print(f)
-    
+
     # try:
     #     if 'file' not in request.files:
     #         print('No file part in request')
