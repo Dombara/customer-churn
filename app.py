@@ -7,7 +7,14 @@ import joblib
 from flask_cors import CORS
 # from datetime import datetime  
 app = Flask(__name__)
-CORS(app)
+# CORS(app)
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization", "Accept"]
+    }
+})
 
 model = tf.keras.models.load_model("customer_churn_hackathon.h5")
 model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
