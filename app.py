@@ -59,15 +59,16 @@ label_encoder=joblib.load('label_encoder.pkl')
 
 # api to recieve uploaded csv
 # Create uploads directory if it doesn't exist
-UPLOAD_FOLDER = 'uploads'
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+# UPLOAD_FOLDER = 'uploads'
+# if not os.path.exists(UPLOAD_FOLDER):
+#     os.makedirs(UPLOAD_FOLDER)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
     print(request.files)
     f=pd.read_csv(request.files['file'])
     print(f)
+    
     # try:
     #     if 'file' not in request.files:
     #         print('No file part in request')
