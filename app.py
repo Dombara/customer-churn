@@ -66,6 +66,8 @@ if not os.path.exists(UPLOAD_FOLDER):
 @app.route('/upload', methods=['POST'])
 def upload_file():
     print(request.files)
+    f=pd.read_csv(request.files['file'])
+    print(f)
     # try:
     #     if 'file' not in request.files:
     #         print('No file part in request')
