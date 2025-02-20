@@ -43,7 +43,8 @@ model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"]
 
 @app.route('/',methods=['GET'])
 def home():
-    return "Customer Churn Prediction API is running!"
+    return jsonify({"message":"Hello World","status":200})
+
 
 
 
