@@ -6,4 +6,3 @@ joblib
 flask_cors
 gunicorn
 scikit-learn
-datetime
